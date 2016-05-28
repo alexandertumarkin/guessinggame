@@ -14,13 +14,15 @@ public class Main {
 			if (string.hasNextInt()) {
 				int guess = string.nextInt();
 				System.out.println("DEBUG: entered number is " + guess);
-				count++;
-				if (guess == number) {
+				gameState.incrementCount();
+				//count++;
+				if(guess == gameState.getNumber()) {
+				//if (guess == number) {
 					System.out.println("You've guessed the number using "
 							+ count + ((count==1)?" attempt":" attempts"));
 					GameState gameState = initialize();
 				} else {
-					System.out.println((guess > number) ? "Less" : "More");
+					System.out.println((guess > gameState.getNumber()) ? "Less" : "More");
 				}
 			} else {
 				if (string.hasNext("q")) {
@@ -36,16 +38,36 @@ public class Main {
 		string.close();
 	}
 
-	public GameState initialize() {
+	public static GameState initialize() {
 		Random random = new Random();
-		number = random.nextInt(100);
-		System.out.println("DEBUG: number is " + number);
-		count = 0;
+		GameState gameState = new GameState();
+		gameState.setNumber(random.nextInt(100));
+		//number = random.nextInt(100);
+		System.out.println("DEBUG: number is " + gameState.getNumber());
+		gameState.setCount(0);
+		return gameState;
 	}
 	
 	private static class GameState {
+		
 		private int number;
 		private int count;
+		
+		public int getNumber() {
+			return number;
+		}
+		public void setNumber(int number) {
+			this.number = number;
+		}
+		public int getCount() {
+			return count;
+		}
+		public void setCount(int count) {
+			this.count = count;
+		}
+		public void incrementCount() {
+			this.count = count++;
+		}
 		
 		
 	}
